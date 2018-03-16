@@ -18,32 +18,30 @@ class GameViewController: UIViewController {
         let skView = self.view as! SKView
         
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         
         skView.showsFPS = true
         skView.showsNodeCount = true
         
         skView.presentScene(scene)
     }
-
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool{
         return true
     }
-
-    override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return UIInterfaceOrientationMask.allButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.all
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool{
         return true
     }
 }

@@ -33,19 +33,20 @@ class XIconButton:SKSpriteNode {
     var xClick:xClickEvent?
     
     func initializer(postion:CGPoint,size:CGSize,iconType:xIconButtonTypes){
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
         self.size = size
         self.position = postion
         self.iconType = iconType
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (!isEnabled){
             return
         }
-
+        
         if (xClick != nil){
             self.xClick!()
         }
     }
+
 }

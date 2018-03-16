@@ -24,7 +24,7 @@ class XProgressBar:SKSpriteNode {
         }
     }
     
-    typealias xProgressChangedEvent = (progress:Double) -> ()
+    typealias xProgressChangedEvent = (_ progress:Double) -> ()
     var xProgressChanged:xProgressChangedEvent?
     
     private var backBarNode:SKSpriteNode!
@@ -34,7 +34,7 @@ class XProgressBar:SKSpriteNode {
     var isTouched:Bool = false
     
     func initializer(postion:CGPoint,size:CGSize){
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
         self.size = size
         self.position = postion
         
@@ -59,7 +59,7 @@ class XProgressBar:SKSpriteNode {
         self.addChild(backBarNode)
         
         fontBarNode = SKSpriteNode()
-        fontBarNode.color = UIColor.whiteColor()
+        fontBarNode.color = UIColor.white
         fontBarNode.size = CGSize(width: 0, height: 3)
         fontBarNode.anchorPoint = CGPoint(x: 0, y: 0.5)
         fontBarNode.position = CGPoint(x: buttonNode.size.width / 2, y: self.size.height / 2)
@@ -81,7 +81,7 @@ class XProgressBar:SKSpriteNode {
         fontBarNode.size.width = (self.size.width - buttonNode.size.width) * CGFloat(_progress)
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (!isTouched){
             for touch in touches{
                 isTouched = true
@@ -89,29 +89,28 @@ class XProgressBar:SKSpriteNode {
             }
         }
     }
-    
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (isTouched){
             for touch in (touches as! Set<UITouch>){
-                var prevPos = touch.previousLocationInNode(self)
-                var pos = touch.locationInNode(self)
+                var prevPos = touch.previousLocation(in: self)
+                var pos = touch.location(in: self)
                 var dx = prevPos.x - pos.x
                 var dy = prevPos.y - pos.y
-                moveButtonNode(CGVector(dx: dx, dy: dy))
+                moveButtonNode(moveVal: CGVector(dx: dx, dy: dy))
                 break
             }
         }
-        
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (xProgressChanged != nil){
-            self.xProgressChanged!(progress: self._progress)
+            self.xProgressChanged!(self._progress)
         }
         isTouched = false
     }
     
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         isTouched = false
     }
+    
 }

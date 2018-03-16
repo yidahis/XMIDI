@@ -24,7 +24,7 @@ class XBarButton:SKSpriteNode {
     
     var titleColor:UIColor{
         get {
-            return titleNode.fontColor
+            return titleNode.fontColor!
         }
         set {
             titleNode.fontColor = newValue
@@ -39,23 +39,22 @@ class XBarButton:SKSpriteNode {
     private var colorAlphaDark = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.4)
     
     func initializer(postion:CGPoint,size:CGSize){
-        self.userInteractionEnabled = true
+        isUserInteractionEnabled = true
         self.size = size
         self.position = postion
         
         titleNode = SKLabelNode(fontNamed:"System")
         titleNode.text = ""
         titleNode.fontSize = 25
-        titleNode.fontColor = UIColor.whiteColor()
+        titleNode.fontColor = UIColor.white
         titleNode.position = CGPoint(x:0, y: 0)
-        titleNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        
+        titleNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         self.addChild(titleNode)
     }
-    
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (xClick != nil){
             self.xClick!()
         }
     }
+    
 }
